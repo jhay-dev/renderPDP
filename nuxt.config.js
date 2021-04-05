@@ -15,6 +15,7 @@ export default {
 		],
 		link: [
 			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+			{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.4/tailwind.min.css' },
 			{ rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' },
 			{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css' },
 			{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css' },
@@ -23,8 +24,8 @@ export default {
 		script: [
 			{ src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js', body: true },
 			{ src: 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js', body: true },
-			{ src: 'cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js', body: true },
-			{ src: '/main.js', body: true }
+			{ src: '/jquery.easing.js', body: true },
+			{ src: '/main.js', body: true },
 		]
 	},
 
@@ -44,7 +45,7 @@ export default {
 
 	// Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
 	buildModules: [
-		'@nuxtjs/tailwindcss',
+		// '@nuxtjs/tailwindcss',
 	],
 
 	// Modules: https://go.nuxtjs.dev/config-modules
@@ -60,7 +61,6 @@ export default {
 			config.resolve.alias['vue$'] = 'vue/dist/vue.esm.js';
 			// Sets webpack's mode to development if `isDev` is true.
 			if (isDev) {
-				config.mode = 'development';
 				config.devtool = 'source-map';
 			} else {
 				config.devtool = 'inline-source-map';

@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import HEADER from '@/components/header';
-import FOOTER from '@/components/footer';
+import HEADER from '@/components/Header';
+import FOOTER from '@/components/Footer';
 
 export default {
 	components: {

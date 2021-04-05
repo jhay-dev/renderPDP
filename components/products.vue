@@ -1,21 +1,22 @@
 <template>
 	<!-- Product -->
-	<section id="product" class="flex flex-col max-w-7xl mx-auto sm:px-12">
-		<form class="product flex flex-grow-0">
-			<aside class="gallery flow-root max-w-7xl mx-auto">
-				<ul class="gallery-navigation flex flex-col">
+	<section id="product">
+		<form class="product"> <!-- v-for="p in products" :key="p.productId" data-id="{{ p.productId }}" -->
+			<aside class="gallery max-w-7xl mx-auto px-2 sm:px-6">
+				<ul class="gallery-navigation">
 					<li class="nav-item active"><a href="#">&nbsp;</a></li>
 					<li class="nav-item"><a href="#">&nbsp;</a></li>
 					<li class="nav-item"><a href="#">&nbsp;</a></li>
 					<li class="nav-item"><a href="#">&nbsp;</a></li>
 				</ul>
 				<ul class="images">
-					<li v-for="product in products" :key="product.productId">
-						<img v-for="image in product.imgURL" :key="image" :src="image" :alt="product.name">
-					</li>
+					<li class="image"><img src="https://placekitten.com/950/1500" alt="" class="product-image active"></li>
+					<li class="image"><img src="https://placekitten.com/950/1500" alt="" class="product-image"></li>
+					<li class="image"><img src="https://placekitten.com/950/1500" alt="" class="product-image"></li>
+					<li class="image"><img src="https://placekitten.com/950/1500" alt="" class="product-image"></li>
 				</ul>
 			</aside>
-			<article class="sticky detail max-w-7xl mx-auto sm:px-6"> <!-- v-for="p in products" :key="p.productId" data-id="{{ productId }}" -->
+			<article class="detail max-w-7xl mx-auto px-2 sm:px-6 max-w-7xl mx-auto px-2 sm:px-6"> <!-- v-for="p in products" :key="p.productId" data-id="{{ productId }}" -->
 				<h1>Even Better Glow™ Light Reflecting Makeup Broad Spectrum SPF 15</h1>
 				<h2>Dermatologist-developed foundation instantly perfects, and continuously improves skin’s radiance and texture.</h2>
 				<p><span class="text-gray-500">(227)</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Read reviews</a></p>
@@ -69,92 +70,77 @@
 </template>
 
 <script>
-import productData from "@/public/data.json";
-
-export default {
-	data() {
-		return {
-			products: productData
-		}
-	},
-	methods: {
-		slug: function(ID) {
-			return productData.filter(product => productId === ID)
+	import productData from "@/public/data.json";
+	
+	export default {
+		data() {
+			return {
+				message: 'Greetings',
+				products: productData
+			}
 		}
 	}
-}
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/mixins.scss";
+	@import "@/assets/scss/mixins.scss";
 
-#product {
-	> form.product {
-		border: 1px solid gray;
-
-		> aside.gallery {
-			position: relative;
-			> ul {
-				$dot-width: 25px;
-				&.gallery-navigation {
-					width: $dot-width;
-					position: fixed;
-					left: calc((100vw - 1280px)/2 + #{$dot-width/2});
-					list-style: none;
-					@include display-flex;
-					@include flex-direction-column;
-					@include flex-align-items-center;
-					@include flex-justify-content-center;
+	#product {
+		> form.product {
+			border: 1px solid gray;
+			> aside.gallery {
+				position: relative;
+				> ul {
+					&.gallery-navigation {
+						list-style: none;
+						position: absolute;
+						left: 0;
+						@include display-flex;
+						@include flex-direction-column;
+						@include flex-align-items-center;
+						@include flex-justify-content-center;
+						> li {
+							> a {
+								display: block;
+								margin-bottom: 10px;
+								&:before {
+									content: '';
+									width: 25px;
+									height: 25px;
+									position: fixed;
+									margin-left: -10px;
+									background-color: black;
+									@include border-radius(50%);
+								}								
+							}
+							&.active > a:before { background-color: ligthen(black, 30%); }
+						}
+					}
 
 					> li {
-						position: relative;
-						margin-bottom: 10px;
-						width: $dot-width;
-						height: $dot-width;
+						&.nav-item {
 
-						> a {
-							display: block;
-							position: absolute;
-							width: 100%;
-							height: 100%;
-							// margin-left: -10px;
-							background-color: black;
-							@include border-radius(50%);
 						}
-						&.active > a:before { background-color: ligthen(black, 30%); }
-					}
-				}
-
-				> li {
-					&.nav-item {
-
-					}
-					&.image {
-						max-width: 50%;
-						> img {
-							max-width: 100%;
+						&.image {
+							
 						}
 					}
 				}
 			}
 		}
-
 		> article {
 			border: 1px solid red;
-			@include position-sticky;
-			top: 0;
 		}
 	}
-}
 
-.toggle__dot {
-	top: -.25rem;
-	left: -.25rem;
-	transition: all 0.3s ease-in-out;
-}
+	.toggle__dot {
+		top: -.25rem;
+		left: -.25rem;
+		transition: all 0.3s ease-in-out;
+	}
 
-input:checked ~ .toggle__dot {
-	transform: translateX(100%);
-	background-color: #48bb78;
-}
+	input:checked ~ .toggle__dot {
+		transform: translateX(100%);
+		background-color: #48bb78;
+	}
 </style>

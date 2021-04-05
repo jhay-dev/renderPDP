@@ -1,14 +1,16 @@
 <template>
 	<!-- Product -->
 	<section id="product" class="flex flex-col max-w-7xl mx-auto w-full sm:px-5 md:px-12 justify-between bg-white">
-		<form class="product flex flex-wrap p-15 s:flex-col lg:flex-row">
-			<aside class="gallery flow-root max-w-7xl mx-auto md:w-1/2">
-				<ul class="gallery-navigation flex flex-col">
-					<li v-for="image in products[0].imgURL" :key="image" :class="'nav-item' + (products[0].mainImage === image ? ' active' : '')"><a href="#">&nbsp;</a></li>
-				</ul>
-				<ul class="images s:w-full">
-					<li v-for="image in products[0].imgURL" :key="image">
-						<img :src="image" alt="product image name" :class="'product-item' + (products[0].mainImage === image ? ' active' : '')">
+		<form class="product flex flex-wrap p-15 sm:flex-col md:flex-row">
+			<aside class="gallery flow-root mx-auto sm:w-full md:max-w-7xl md:w-1/2">
+				<div class="gallery-nav sm:flex sm:relative md:fixed">
+					<ul class="gallery-nav flex flex-col align-center justify-center">
+						<li v-for="image in products[0].imgURL" :key="image" :class="'nav-item' + (products[0].mainImage === image ? ' active' : '')"><a href="#">&nbsp;</a></li>
+					</ul>
+				</div>
+				<ul class="gallery carousel relative w-full sm:flex-col md:flex-row md:block">
+					<li v-for="image in products[0].imgURL" :key="image" class="block w-full">
+						<img :src="image" alt="product image name" :class="'product-item w-full' + (products[0].mainImage === image ? ' active' : '')">
 					</li>
 				</ul>
 			</aside>
@@ -80,32 +82,30 @@
 import productData from "@/public/data.json";
 
 export default {
-	// props: {
-		// html: {
-		// 	type: String,
-		// 	default: ``,
+	props: {
+		// product: {
+		// 	type: Object,
+		// 	default: productData[0],
 		// },
-	// },
+	},
 	data() {
 		return {
 			products: productData,
-			product: productData[0],
+			// product: function() {
+			// 	let product = productData[0];
+			// 	product
+			// 	console.log(product);
+			// 	return product;
+			// },
 			// rating: null,
 		};
 	},
 	computed: {
-		dynamicComponent() {
-			return {
-				template: function() {
-					let avg = this.product.ratings.averageRating,
-						solid = Math.floor(avg),
-						half = avg % 2 ? 1 : 0,
-						stars = `<i class="fa fa-star" aria-hidden="true"></i>`,
-						starh = `<i class="fa fa-star-half" aria-hidden="true"></i>`;
-					return `<span class="star-rating">` + stars.repeat(solid) + starh.repeat(half) + `</span>`;
-				},
-				props: ['html'],
-			}
+		product: function(p) {
+			Object.keys(p.features).forEach(function(i) {
+				p[i] = 'foobar';
+			});
+			return p;
 		},
 		stars: function(rating) {
 			console.log(rating);
@@ -118,8 +118,9 @@ export default {
 		},
 	},
 	methods: {
-		sentence: function() {
-			
+		sentence: function(str) {
+			let result = str.replace(/([A-Z])/g, ' $1');
+			return result.charAt(0).toUpperCase() + result.slice(1);
 		},
 		async slug() {
 			let ID = this.product.productId;
@@ -133,8 +134,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/animation.scss";
-@import "@/assets/scss/mixins.scss";
+// @import "@/assets/scss/main.scss";
+@import "@/assets/scss/_animations.scss";
+@import "@/assets/scss/_mixins.scss";
+@import "@/assets/scss/_breakpoint.scss";
 
 #product {
 	> form.product {
@@ -142,24 +145,21 @@ export default {
 			position: relative;
 			> ul {
 				$dot-width: 10px;
-				&.gallery-navigation {
+
+				&.gallery-nav {
 					width: 2*$dot-width;
 					position: fixed;
 					left: calc((100vw - 1280px)/2 + #{$dot-width});
-					@media (max-width: 1285px) {
-						left: 15px;
-					}
-					@media (max-width: 768px) {
-						left: 5px;
-					}
 					bottom: 100px;
 					list-style: none;
-					@include display-flex;
-					@include flex-direction-column;
-					@include flex-align-items-center;
-					@include flex-justify-content-center;
+					@include breakpoint($desktop) {
+						left: 15px;
+					}
+					@include breakpoint($tablet) {
+						left: 5px;
+					}
 
-					> li {
+					> li.nav-item {
 						position: relative;
 						margin-bottom: 2*$dot-width - 5px;
 						width: $dot-width;
@@ -174,17 +174,21 @@ export default {
 							background-color: #cdcdcd;
 							@include border-radius(50%);
 						}
+
 						&.active > a { background-color: darken(#cdcdcd, 40%); }
 					}
 				}
 
-				> li {
-					&.nav-item {
-					}
-					&.image {
-						max-width: 50%;
-						> img {
-							max-width: 100%;
+				&.gallery {
+					width: 100%;
+					overflow: hidden;
+					.owl-stage-outer {
+						width: 100%;
+						overflow: hidden;
+						.owl-stage {
+							.owl-item {
+								
+							}
 						}
 					}
 				}
