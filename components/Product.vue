@@ -135,9 +135,10 @@ export default {
 
 <style lang="scss" scoped>
 // @import "@/assets/scss/main.scss";
+@import "@/assets/scss/_variables.scss";
+@import "@/assets/scss/_breakpoint.scss";
 @import "@/assets/scss/_animations.scss";
 @import "@/assets/scss/_mixins.scss";
-@import "@/assets/scss/_breakpoint.scss";
 
 #product {
 	> form.product {
@@ -186,12 +187,15 @@ export default {
 			.gallery-images {
 				width: 100%;
 				overflow: hidden;
+				@include breakpoint($tablet) {
+					// border: 2px solid red;
+				}
 				.owl-stage-outer {
 					width: 100%;
 					overflow: hidden;
 					.owl-stage {
 						.owl-item {
-							
+							// position:
 						}
 					}
 				}

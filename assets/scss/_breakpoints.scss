@@ -1,0 +1,38 @@
+@mixin breakpoint($point) {
+	@if $point == mobile {
+		@media (min-width: 1px) { @content; }
+	}
+	@else if $point == mobileLandscape {
+		@media (min-width: 1px) and (max-height: 400px) and (orientation: landscape) { @content; }
+	}
+	@else if $point == mobileMaxLandscape {
+		@media (max-width: 782px) and (max-height: 400px) and (orientation: landscape) { @content; }
+	}
+	@else if $point == mobileRange {
+		@media (min-width: 1px) and (max-width: 767px) { @content; }
+	}
+	@else if $point == iphone4 {
+		@media (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) { @content; }
+	}
+	@else if $point == iphone4Landscape {
+		@media (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) { @content; }
+	}
+	@else if $point == iphoneX {
+		@media (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) { @content; }
+	}
+	@else if $point == iphoneXLandscape {
+		@media (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) { @content; }
+	}
+	@else if $point == tablet {
+		@media (min-width: 767px) { @content; }
+	}
+	@else if $point == desktop {
+		@media (min-width: 1281px) { @content; }
+	}
+	@else if $point == desktopLarge {
+		@media (min-width: 1920px)  { @content; }
+	}
+	@else if $point == desktopHuge {
+		@media (min-width: 2680px)  { @content; }
+	}
+}

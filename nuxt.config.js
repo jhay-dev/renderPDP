@@ -6,12 +6,12 @@ export default {
 	head: {
 		title: 'Tommy John PDP',
 		htmlAttrs: {
-			lang: 'en'
+			lang: 'en',
 		},
 		meta: [
 			{ charset: 'utf-8' },
 			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
-			{ hid: 'description', name: 'description', content: '' }
+			{ hid: 'description', name: 'description', content: '' },
 		],
 		link: [
 			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -26,7 +26,7 @@ export default {
 			{ src: 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js', body: true },
 			{ src: '/jquery.easing.js', body: true },
 			{ src: '/main.js', body: true },
-		]
+		],
 	},
 
 	// Global CSS: https://go.nuxtjs.dev/config-css
@@ -34,8 +34,16 @@ export default {
 		// CSS file in the project
 		'@/assets/css/main.css',
 		// SCSS file in the project
-		'@/assets/scss/main.scss'
+		'@/assets/scss/main.scss',
 	],
+
+	// // Include .scss files from scss directory
+	// styleResources: {
+	// 	scss: [
+	// 		'@/assets/scss/main.scss',
+	// 		// '@/assets/scss/_*.scss',
+	// 	],
+	// },
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
 	plugins: [],
@@ -49,14 +57,23 @@ export default {
 	],
 
 	// Modules: https://go.nuxtjs.dev/config-modules
-	modules: [],
+	modules: [
+		// '@nuxtjs/style-resources',
+	],
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
+		postcss: {
+			plugins: {
+				'postcss-custom-properties': {
+					warnings: false,
+				},
+			},
+		},
 		extend(config, { isDev, isClient }) {
 			config.module.rules.push({
 				test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-				loader: 'file-loader'
+				loader: 'file-loader',
 			});
 			config.resolve.alias['vue$'] = 'vue/dist/vue.esm.js';
 			// Sets webpack's mode to development if `isDev` is true.
