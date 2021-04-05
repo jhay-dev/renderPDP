@@ -2,17 +2,17 @@
 	<!-- Product -->
 	<section id="product" class="flex flex-col max-w-7xl mx-auto w-full sm:px-5 md:px-12 justify-between bg-white">
 		<form class="product flex flex-wrap p-15 sm:flex-col md:flex-row">
-			<aside class="gallery flow-root mx-auto sm:w-full md:max-w-7xl md:w-1/2">
-				<div class="gallery-nav sm:flex sm:relative md:fixed">
-					<ul class="gallery-nav flex flex-col align-center justify-center">
-						<li v-for="image in products[0].imgURL" :key="image" :class="'nav-item' + (products[0].mainImage === image ? ' active' : '')"><a href="#">&nbsp;</a></li>
-					</ul>
-				</div>
-				<ul class="gallery carousel relative w-full sm:flex-col md:flex-row md:block">
+			<aside class="gallery flow-root justify-center mx-auto flex sm:flex-col md:flex-col-reverse sm:w-full md:max-w-7xl md:w-1/2">
+				<ul class="gallery-images carousel relative w-full flex sm:flex-col md:flex-row md:block">
 					<li v-for="image in products[0].imgURL" :key="image" class="block w-full">
 						<img :src="image" alt="product image name" :class="'product-item w-full' + (products[0].mainImage === image ? ' active' : '')">
 					</li>
 				</ul>
+				<div class="gallery-nav flex align-center justify-center sm:w-full sm:absolute md:fixed">
+					<ul class="flex align-center justify-center md:flex-col">
+						<li v-for="image in products[0].imgURL" :key="image" :class="'nav-item' + (products[0].mainImage === image ? ' active' : '')"><a class="block w-20 h-20" href="#">&nbsp;</a></li>
+					</ul>
+				</div>
 			</aside>
 			<article class="sticky detail max-w-7xl mx-auto sm:px-6 md:w-1/2">
 				<h1 class="text-3xl font-bold">{{ products[0].name }}</h1>
@@ -143,31 +143,34 @@ export default {
 	> form.product {
 		> aside.gallery {
 			position: relative;
-			> ul {
+
+			.gallery-nav {
 				$dot-width: 10px;
-
-				&.gallery-nav {
-					width: 2*$dot-width;
-					position: fixed;
+				width: 2 * $dot-width;
+				position: fixed;
+				list-style: none;
+				bottom: 100px;
+				left: 5px;
+				@include breakpoint($desktop) {
 					left: calc((100vw - 1280px)/2 + #{$dot-width});
-					bottom: 100px;
-					list-style: none;
-					@include breakpoint($desktop) {
-						left: 15px;
-					}
-					@include breakpoint($tablet) {
-						left: 5px;
-					}
+				}
+				@include breakpoint($tablet) {
+					left: 15px;
+				}
 
+				> ul {
 					> li.nav-item {
 						position: relative;
-						margin-bottom: 2*$dot-width - 5px;
 						width: $dot-width;
 						height: $dot-width;
 
+						& + li {
+							margin-top: 2 * $dot-width - 5px;
+						}
+
 						> a {
 							display: block;
-							position: absolute;
+							// position: absolute;
 							width: 100%;
 							height: 100%;
 							// margin-left: -10px;
@@ -176,19 +179,19 @@ export default {
 						}
 
 						&.active > a { background-color: darken(#cdcdcd, 40%); }
-					}
+					}					
 				}
+			}
 
-				&.gallery {
+			.gallery-images {
+				width: 100%;
+				overflow: hidden;
+				.owl-stage-outer {
 					width: 100%;
 					overflow: hidden;
-					.owl-stage-outer {
-						width: 100%;
-						overflow: hidden;
-						.owl-stage {
-							.owl-item {
-								
-							}
+					.owl-stage {
+						.owl-item {
+							
 						}
 					}
 				}
