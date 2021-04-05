@@ -2,19 +2,21 @@
 	<!-- Product -->
 	<section id="product" class="flex flex-col max-w-7xl mx-auto w-full sm:px-5 md:px-12 justify-between bg-white">
 		<form class="product flex flex-wrap p-15 sm:flex-col md:flex-row">
-			<aside class="gallery flow-root justify-center mx-auto flex sm:flex-col md:flex-col-reverse sm:w-full md:max-w-7xl md:w-1/2">
-				<ul class="gallery-images carousel relative w-full flex sm:flex-col md:flex-row md:block">
-					<li v-for="image in products[0].imgURL" :key="image" class="block w-full">
+			<aside class="gallery flow-root justify-center mx-auto sm:flex sm:flex-col md:flex-col-reverse sm:w-full md:max-w-7xl md:w-1/2">
+				<ul class="gallery-images carousel relative w-full sm:flex sm:align-center sm:justify-center">
+					<li v-for="image in products[0].imgURL" :key="image" class="w-full flex justify-center position top-0">
 						<img :src="image" alt="product image name" :class="'product-item w-full' + (products[0].mainImage === image ? ' active' : '')">
 					</li>
 				</ul>
 				<div class="gallery-nav flex align-center justify-center sm:w-full sm:absolute md:fixed">
 					<ul class="flex align-center justify-center md:flex-col">
-						<li v-for="image in products[0].imgURL" :key="image" :class="'nav-item' + (products[0].mainImage === image ? ' active' : '')"><a class="block w-20 h-20" href="#">&nbsp;</a></li>
+						<li v-for="image in products[0].imgURL" :key="image" :class="'nav-item sm:flex md:block' + (products[0].mainImage === image ? ' active' : '')">
+							<a class="flex align-center justify-center w-20 h-20" href="#"></a>
+						</li>
 					</ul>
 				</div>
 			</aside>
-			<article class="sticky detail max-w-7xl mx-auto sm:px-6 md:w-1/2">
+			<article class="sticky detail max-w-7xl mx-auto md:pl-6 md:w-1/2">
 				<h1 class="text-3xl font-bold">{{ products[0].name }}</h1>
 				<h2 class="text-lg my-5">{{ products[0].description }}</h2>
 				<div id="customer-rating w-full flex">
@@ -134,30 +136,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import "@/assets/scss/main.scss";
-@import "@/assets/scss/_variables.scss";
-@import "@/assets/scss/_breakpoint.scss";
-@import "@/assets/scss/_animations.scss";
-@import "@/assets/scss/_mixins.scss";
+@import "@/assets/scss/main.scss";
+// @import "@/assets/scss/_variables.scss";
+// @import "@/assets/scss/_breakpoint.scss";
+// @import "@/assets/scss/_animations.scss";
+// @import "@/assets/scss/_mixins.scss";
 
 #product {
 	> form.product {
 		> aside.gallery {
 			position: relative;
 
-			.gallery-nav {
+			div.gallery-nav {
 				$dot-width: 10px;
-				width: 2 * $dot-width;
-				position: fixed;
 				list-style: none;
-				bottom: 100px;
-				left: 5px;
-				@include breakpoint($desktop) {
-					left: calc((100vw - 1280px)/2 + #{$dot-width});
-				}
-				@include breakpoint($tablet) {
-					left: 15px;
-				}
 
 				> ul {
 					> li.nav-item {
@@ -165,46 +157,121 @@ export default {
 						width: $dot-width;
 						height: $dot-width;
 
-						& + li {
-							margin-top: 2 * $dot-width - 5px;
-						}
-
 						> a {
-							display: block;
-							// position: absolute;
 							width: 100%;
 							height: 100%;
 							// margin-left: -10px;
-							background-color: #cdcdcd;
-							@include border-radius(50%);
+
+							&:before {
+								content: '\00A0';
+								width: $dot-width;
+								height: $dot-width;
+								background-color: #cdcdcd;
+								@include border-radius(50%);
+							}
 						}
 
-						&.active > a { background-color: darken(#cdcdcd, 40%); }
-					}					
+						&.active > a:before { background-color: darken(#cdcdcd, 40%); }
+					}
+				}
+				@include breakpoint($mobile) {
+					left: 5px;
+					width: auto;
+					position: relative;
+					> ul {
+						margin: 50px;
+						> li.nav-item {
+							& + li {
+								margin-top: auto;
+								margin-left: 2 * $dot-width - 5px;
+							}
+						}
+					}
+				}
+				@include breakpoint($tablet) {
+					left: 15px;
+					width: 2 * $dot-width;
+					position: fixed;
+					bottom: 100px;
+					> ul {
+						li.nav-item {
+							& + li {
+								margin-left: auto;
+								margin-top: $dot-width;
+							}
+						}
+					}
+				}
+				@include breakpoint($desktop) {
+					left: calc((100vw - 1280px)/2 + #{$dot-width});
 				}
 			}
 
-			.gallery-images {
+			ul.gallery-images {
 				width: 100%;
+				height: $galleryHeight;
 				overflow: hidden;
-				@include breakpoint($tablet) {
-					// border: 2px solid red;
-				}
+
 				.owl-stage-outer {
 					width: 100%;
 					overflow: hidden;
 					.owl-stage {
 						.owl-item {
-							// position:
+							width: auto;
+							height: calc(90vh - #{$header});
+							li {
+								width: auto;
+								height: calc(90vh - #{$header});
+								img {
+									width: auto;
+									height: calc(90vh - #{$header});
+								}
+							}
 						}
 					}
 				}
+
+				@include breakpoint($mobile) {
+					.owl-stage-outer {
+						.owl-stage {
+							.owl-item {
+								width: auto;
+								height: calc(90vh - #{$header});
+							}
+						}
+					}
+
+					li {
+						position: absolute;
+						top: 0;
+					}
+				}
+				// @include breakpoint($mobile) {
+				// 	max-height: calc(90vh - #{$header});
+				// 	.owl-stage-outer {
+				// 		max-height: calc(90vh - #{$header});
+				// 		.owl-stage {
+				// 			max-height: calc(90vh - #{$header});
+				// 			.owl-item {
+				// 				max-height: calc(90vh - #{$header});
+				// 				li {
+				// 					max-height: calc(90vh - #{$header});
+				// 					img {
+				// 						max-height: calc(90vh - #{$header});
+				// 					}
+				// 				}
+				// 			}
+				// 		}
+				// 	}
+				// }
 			}
 		}
 
 		> article.detail {
-			@include position-sticky;
-			top: 0;
+			@include breakpoint($tablet) {
+				top: 0;
+				@include position-sticky;
+			}
 
 			> h1 {
 				font-size: 28px;

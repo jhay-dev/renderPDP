@@ -14,7 +14,7 @@
 						</div>
 
 						<!-- Sub nav -->
-						<div id="sub-navigation" class="w-full flex flex-grow px-6 items-center sm:items-stretch sm:justify-end">
+						<div id="sub-navigation" class="w-full sm:hidden md:flex md:flex-grow md:pl-6 md:items-center md:justify-end">
 							<div class="hidden sm:block">
 								<div class="flex space-x-4">
 									<NuxtLink v-for="product in products" :key="parseInt(product.productId)" to="/products/even-better-glow" class="underline-hover text-black-900 py-2 transform -translate-x-0.5 text-sm font-medium relative">{{ product.name.includes('™') ? product.name.split('™')[0] + '™' : product.name }}</NuxtLink>
@@ -80,11 +80,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/main.scss";
+// @import "@/assets/scss/_variables.scss";
+// @import "@/assets/scss/_breakpoint.scss";
+// @import "@/assets/scss/_animations.scss";
+// @import "@/assets/scss/_mixins.scss";
+
 header.main {
 	img.logo {
 		max-width: 182px;
 		max-height: 64px;
 		height: 100%;
+	}
+}
+@include breakpoint($mobile) {
+	#sub-navigation {
+		display: none;
+	}
+}
+@include breakpoint($tablet) {
+	button.hamburger {
+		display: none;
+	}
+	#sub-navigation {
+		@include display-flex;
 	}
 }
 #navigation-container {

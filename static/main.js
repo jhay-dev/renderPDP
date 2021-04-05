@@ -46,9 +46,9 @@
 		$(this).parent('li').siblings('.active').removeClass('active');
 		$(this).parent('li').addClass('active');
 		console.log('target:', target);
-		$('html, body').stop(true, true).animate({
+		$('html, body').stop().animate({
 			scrollTop: parseInt(target.offset().top) - header.outerHeight()
-		}, 350, 'easeInOutQuart');
+		}, 500, 'easeInOutQuart');
 	});
 
 	// Product page
@@ -128,7 +128,7 @@
 					startPosition: 0,
 					center: false,  
 					loop: true,
-					margin: 25,
+					margin: 0,
 					lazyLoad: true,
 					nav: false,
 					dots: false,
@@ -169,7 +169,7 @@
 			if (items.length) {
 				items.each(function(i) {
 					if (direction == 'down') {
-						
+
 					} else {
 
 					}

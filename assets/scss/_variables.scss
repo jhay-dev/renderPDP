@@ -1,4 +1,4 @@
-// Variables
+// Breakpoints
 $mobile: (min-width: 1px);
 $tablet: (min-width: 767px);
 $desktop: (min-width: 1281px);
@@ -15,3 +15,7 @@ $tablet: (min-width: 767px);
 $desktop: (min-width: 1281px);
 $desktopLarge: (min-width: 1920px);
 $desktopHuge: (min-width: 2680px);
+
+// Elements
+$header: 64px;
+$galleryHeight: calc(90vh - #{$header});
